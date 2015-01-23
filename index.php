@@ -12,9 +12,25 @@
     </head>
     <body>
 
-        <?php
-        echo "<p>Testing php</p>"
-        ?>
+    <form action="login.php" method="post">
+        User: <input type="text" name="user[0][name]">
+        Password: <input type="text" name="user[0][password]">
+        <input type="submit">
+    </form>
 
+        <?php
+        include "TestClass.php";
+        session_start();
+        $tst = new TestClass("cake");
+        echo $tst->var;
+
+        // $_SESSION['user'] = 'alpha';
+        // $_SESSION['user'] = $_POST['user'];
+        // $_SESSION['password'] = 'cake';
+
+
+        ?>
+        <a href="read.php">Read</a>
     </body>
 </html>
+ 
