@@ -12,12 +12,18 @@
     </head>
     <body>
 
-        <?php
+    <form action="do_register.php" method="post">
+        User: <input type="text" name="register[name]">
+        Password: <input type="text" name="register[password]">
+        <input type="submit" value="Register">
+    </form>
 
-        session_start();
-        echo "<p>User : ". $_SESSION['user'] . "</p>" . "<p>Password : ". $_SESSION['password'] . "</p>"
+    <?php
 
-        ?>
+    ?>
     </body>
 </html>
  
+
+
+
