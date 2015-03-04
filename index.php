@@ -23,6 +23,12 @@
         <input type="submit" value="Logout">
     </form>
 
+    <form action="test.php" method="post">
+        String: <input type="text" name="test_string">
+        <input type="submit" value="Test">
+    </form>
+
+
         <?php
         // include "TestClass.php";
         session_start();

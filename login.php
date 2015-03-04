@@ -36,4 +36,11 @@
 	// var_dump($row);
 	
 
+	function encode($arg, $salt){
+
+		echo crc32($arg);
+
+		// return hash('sha-256', $arg . $salt);
+	}
+
 ?>
