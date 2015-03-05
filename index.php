@@ -13,7 +13,7 @@
     <body>
 
     <form action="login.php" method="post">
-        User: <input type="text" name="user[name]">
+        User: <input type="text" name="user[username]">
         Password: <input type="text" name="user[password]">
         <input type="submit">
     </form>
@@ -28,21 +28,13 @@
         <input type="submit" value="Test">
     </form>
 
-
         <?php
-        // include "TestClass.php";
         session_start();
-        // $tst = new TestClass("cake");
-        // echo $tst->var;
-
-        // $_SESSION['user'] = 'alpha';
-        // $_SESSION['user'] = $_POST['user'];
-        // $_SESSION['password'] = 'cake';
 
         if(isset($_SESSION['session_login_status']) && $_SESSION['session_login_status']){
-            echo "LOGIN SUCCESSFUL";
+            printf("LOGIN SUCCESSFUL");
         } else {
-            echo "NOT YET LOGGED IN";
+            printf("NOT YET LOGGED IN");
         }
 
         ?>

@@ -13,7 +13,7 @@
     <body>
 
     <form action="do_register.php" method="post">
-        User: <input type="text" name="register[name]">
+        User: <input type="text" name="register[username]">
         Password: <input type="text" name="register[password]">
         <input type="submit" value="Register">
     </form>

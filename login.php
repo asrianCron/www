@@ -1,46 +1,36 @@
 <?php
 	session_start();
 	include "config/db.php";
-	// var_dump($_POST['user']['name']);
-
-	$username = $_POST['user']['name'];
+	include "utils.php";
+	$username = $_POST['user']['username'];
 	$password = $_POST['user']['password'];
 
-	$_SESSION['user'] = $_POST['user']['name'];
+	$_SESSION['username'] = $_POST['user']['username'];
 	$_SESSION['password'] = $_POST['user']['password'];
 
-	// $mysqli = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 	$mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 	if($mysqli->connect_errno) {
 		echo "FAILED TO CONNECT TO MYSQL: " . $mysqli->connect_error;
 	}
-	// $query = "SELECT " . $username . " FROM " . DB_USERS_TABLE;
-	$query = "SELECT username, password FROM " . DB_USERS_TABLE . " WHERE BINARY username='" . $username ."'";
 
-	$res = $mysqli->query($query);
-	$row = 0;
-	if($res){
-		$row = $res->fetch_assoc();
-		if($row['password'] == $password){
-			$_SESSION['session_login_status'] = 1;
-			header('Location: /');
-		} else {
-			$_SESSION['session_login_status'] = 0;
-			header('Location: /');
+    if($prep = $mysqli->prepare("SELECT username, password FROM " . DB_USERS_TABLE. " WHERE BINARY username=?")){
+	    $prep->bind_param("s", $mysqli->real_escape_string($username)); // it'll probably work without using real_escape_string(), TODO: look into that
+	    $prep->execute();
+	    $prep->bind_result($usrn, $psswrd);
+	    if($prep->fetch()){
+	    	if($psswrd === encode($username, $password)){
+	    		$_SESSION['session_login_status'] = 1;
+	    		header('Location: /');
+	    	} else {
+	    		$_SESSION['session_login_status'] = 0;
+	    		header('Location: /');
+	    	}
+	    } else {
+		    header('Location: /');
 
-		}
-	}
-
-	// var_dump($res);
-	// echo "</br>";
-	// var_dump($row);
-	
-
-	function encode($arg, $salt){
-
-		echo crc32($arg);
-
-		// return hash('sha-256', $arg . $salt);
+	    }
+	} else {
+		printf("FAILED TO PREPARE QUERY");
 	}
 
 ?>

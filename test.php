@@ -9,17 +9,16 @@
 	$str_split = 
 	var_dump($str_split);
 	echo endl();
-	var_dump(split_username($test_string));
+	var_dump(encode($test_string, $bit_32));
 
 
 
-	function encode($arg, $salt){
+	function encode($usr, $pass){
+		$split_user = split_username($usr); // halving the username string
+		$salt = crc32($usr);
+		$to_return = $split_user[0] . $salt . $split_user[1]; // salting the user
 
-		// if(){
-			
-		// }
-
-		// return hash('sha-256', $arg . $salt);
+		return hash('sha256', $to_return);
 	}
 
 	function split_username($arg){
