@@ -2,11 +2,11 @@
 	session_start();
 	include "config/db.php";
 	include "utils.php";
+	include "user.php";
 	$username = $_POST['user']['username'];
 	$password = $_POST['user']['password'];
-
-	$_SESSION['username'] = $_POST['user']['username'];
-	$_SESSION['password'] = $_POST['user']['password'];
+	$user = new User();
+	$_SESSION['user'] = $user;
 
 	$mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 	if($mysqli->connect_errno) {
@@ -19,10 +19,15 @@
 	    $prep->bind_result($usrn, $psswrd);
 	    if($prep->fetch()){
 	    	if($psswrd === encode($username, $password)){
-	    		$_SESSION['session_login_status'] = 1;
+	    		// $_SESSION['session_login_status'] = 1;
+	    		$_SESSION['user']->set_logged_in(1);
+	    		$_SESSION['user']->set_username($username);
+	    		$_SESSION['user']->set_encrypted_password($psswrd);
 	    		header('Location: /');
 	    	} else {
-	    		$_SESSION['session_login_status'] = 0;
+	    		// $_SESSION['session_login_status'] = 0;
+	    		$_SESSION['user']->set_logged_in(0);
+	    		$_SESSION['user']->set_username($username);
 	    		header('Location: /');
 	    	}
 	    } else {

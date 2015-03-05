@@ -14,7 +14,7 @@
 
     <form action="login.php" method="post">
         User: <input type="text" name="user[username]">
-        Password: <input type="text" name="user[password]">
+        Password: <input type="password" name="user[password]">
         <input type="submit">
     </form>
     <a href="register.php">Register</a>
@@ -31,7 +31,7 @@
         <?php
         session_start();
 
-        if(isset($_SESSION['session_login_status']) && $_SESSION['session_login_status']){
+        if(isset($_SESSION['']) && $_SESSION['user']->is_logged_in()){
             printf("LOGIN SUCCESSFUL");
         } else {
             printf("NOT YET LOGGED IN");
